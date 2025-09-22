@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "019d08ff-5f52-4def-9e12-ca3294775ccc",
+		"name": "week2.day1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2257080"
+	},
+	"item": [
+		{
+			"name": "create-a-new-record-with-request-body-in-incident-table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has Created\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response format should be application/json\", function () {\r",
+							"    let responseFormat = pm.response.headers.get(\"Content-Type\");\r",
+							"    pm.expect(responseFormat).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 5000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate short_description key value\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.result.short_description).to.eql(pm.iterationData.get(\"shortDescription\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate description key value\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    let jsonpath= jsonData.result['description'];\r",
+							"    pm.expect(jsonpath).to.eql(pm.iterationData.get(\"description\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate the JSON response have sys_id property\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var jsonpath = jsonData.result;\r",
+							"    pm.expect(jsonpath).to.have.property('sys_id');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "dLS9Qgs=V!0n",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"short_description\": \"{{shortDescription}}\",\r\n    \"description\": \"{{description}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:table_name",
+					"protocol": "{{protocal}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{basePath}}",
+						":table_name"
+					],
+					"variable": [
+						{
+							"key": "table_name",
+							"value": "{{tableName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-a-record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//How to get a global varible value in the script\r",
+							"console.log(pm.globals.get(\"protocal\"));\r",
+							"\r",
+							"//How to get a environment varible value in the script\r",
+							"console.log(pm.environment.get(\"baseUrl\"));\r",
+							"console.log(pm.environment.get(\"username\"));\r",
+							"console.log(pm.environment.get(\"password\"));\r",
+							"\r",
+							"//How to get a collection varible value in the script\r",
+							"console.log(pm.collectionVariables.get(\"basePath\"));\r",
+							"console.log(pm.collectionVariables.get(\"tableName\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:table_name/:sys_id",
+					"protocol": "{{protocal}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{basePath}}",
+						":table_name",
+						":sys_id"
+					],
+					"variable": [
+						{
+							"key": "table_name",
+							"value": "{{tableName}}"
+						},
+						{
+							"key": "sys_id",
+							"value": "{{sys_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"var jsonData = 10;\r",
+					"console.log(jsonData);"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "basePath",
+			"value": ""
+		},
+		{
+			"key": "tableName",
+			"value": ""
+		},
+		{
+			"key": "sys_id",
+			"value": ""
+		}
+	]
+}
