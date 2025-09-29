@@ -43,7 +43,8 @@
 							"npm:jsonpath@1.1.1": {
 								"id": "npm:jsonpath@1.1.1"
 							}
-						}
+						},
+						"requests": {}
 					}
 				}
 			],
@@ -53,21 +54,6 @@
 				}
 			},
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [
 					{
@@ -78,18 +64,14 @@
 					}
 				],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/incident",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/{{tableName}}",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
-						"incident"
+						"{{basePath}}",
+						"{{tableName}}"
 					]
 				}
 			},
@@ -108,7 +90,8 @@
 							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -118,21 +101,6 @@
 				}
 			},
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [
 					{
@@ -142,18 +110,14 @@
 					}
 				],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/incident",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{basePath}}/{{basePath}}/{{tableName}}",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{basePath}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
-						"incident"
+						"{{basePath}}",
+						"{{tableName}}"
 					]
 				}
 			},
@@ -162,41 +126,22 @@
 		{
 			"name": "get_all_records_from_incident_api_path_parameter",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/:tableName",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:tableName",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
+						"{{basePath}}",
 						":tableName"
 					],
 					"variable": [
 						{
 							"key": "tableName",
-							"value": "incident"
+							"value": "{{tableName}}"
 						}
 					]
 				}
@@ -206,46 +151,27 @@
 		{
 			"name": "get_a_record_from_incident_api",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/:tableName/:sys_id",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:tableName/:sys_id",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
+						"{{basePath}}",
 						":tableName",
 						":sys_id"
 					],
 					"variable": [
 						{
 							"key": "tableName",
-							"value": "incident"
+							"value": "{{tableName}}"
 						},
 						{
 							"key": "sys_id",
-							"value": "46f1784ba9fe19810018aa27fbb23482"
+							"value": "{{sysId}}"
 						}
 					]
 				}
@@ -254,42 +180,41 @@
 		},
 		{
 			"name": "create_a_new_record_without_request_body_in_incident_table_api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the JSON response have sys_id property\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var jsonpath = jsonData.result;\r",
+							"    pm.expect(jsonpath).to.have.property('sys_id');\r",
+							"    pm.collectionVariables.set(\"sys_id\", jsonpath.sys_id);   \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/:tableName",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:tableName",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
+						"{{basePath}}",
 						":tableName"
 					],
 					"variable": [
 						{
 							"key": "tableName",
-							"value": "incident"
+							"value": "{{tableName}}"
 						}
 					]
 				}
@@ -299,46 +224,27 @@
 		{
 			"name": "delete_a_existing_record_in_incident_table_api",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/:tableName/:sys_id",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:tableName/:sys_id",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
+						"{{basePath}}",
 						":tableName",
 						":sys_id"
 					],
 					"variable": [
 						{
 							"key": "tableName",
-							"value": "incident"
+							"value": "{{tableName}}"
 						},
 						{
 							"key": "sys_id",
-							"value": "4767cc9c83043210bd50ed70deaad3ae"
+							"value": "{{sys_id}}"
 						}
 					]
 				}
@@ -353,21 +259,6 @@
 				}
 			},
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [
 					{
@@ -378,18 +269,14 @@
 					}
 				],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/incident?sysparm_fields=sys_id,number,category,state,impact&sysparm_limit=3",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/{{tableName}}?sysparm_fields=sys_id,number,category,state,impact&sysparm_limit=3",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
-						"incident"
+						"{{basePath}}",
+						"{{tableName}}"
 					],
 					"query": [
 						{
@@ -425,7 +312,8 @@
 							"npm:jsonpath@1.1.1": {
 								"id": "npm:jsonpath@1.1.1"
 							}
-						}
+						},
+						"requests": {}
 					}
 				}
 			],
@@ -435,21 +323,6 @@
 				}
 			},
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "dLS9Qgs=V!0n",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [
 					{
@@ -460,18 +333,14 @@
 					}
 				],
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/incident?sysparm_fields=sys_id,number,category,state,impact&sysparm_query=category=hardware",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/{{tableName}}?sysparm_fields=sys_id,number,category,state,impact&sysparm_query=category=hardware",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
-						"incident"
+						"{{basePath}}",
+						"{{tableName}}"
 					],
 					"query": [
 						{
@@ -486,6 +355,63 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "basePath",
+			"value": "api/now/table"
+		},
+		{
+			"key": "tableName",
+			"value": "incident"
+		},
+		{
+			"key": "sysId",
+			"value": "1c741bd70b2322007518478d83673af3"
+		},
+		{
+			"key": "sys_id",
+			"value": ""
 		}
 	]
 }

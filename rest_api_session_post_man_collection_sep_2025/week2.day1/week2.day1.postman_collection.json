@@ -48,7 +48,8 @@
 							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -58,12 +59,12 @@
 					"basic": [
 						{
 							"key": "password",
-							"value": "dLS9Qgs=V!0n",
+							"value": "{{password}}",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "admin",
+							"value": "{{username}}",
 							"type": "string"
 						}
 					]
@@ -173,6 +174,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -183,6 +185,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					"var jsonData = 10;\r",
 					"console.log(jsonData);"
@@ -193,15 +196,15 @@
 	"variable": [
 		{
 			"key": "basePath",
-			"value": ""
+			"value": "api/now/table"
 		},
 		{
 			"key": "tableName",
-			"value": ""
+			"value": "incident"
 		},
 		{
 			"key": "sys_id",
-			"value": ""
+			"value": "75d3002e838c7210bd50ed70deaad35c"
 		}
 	]
 }

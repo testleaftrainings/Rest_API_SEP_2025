@@ -39,6 +39,12 @@
 							"    var jsonData = pm.response.json();\r",
 							"    let jsonpath= jsonData.result['description'];\r",
 							"    pm.expect(jsonpath).to.eql(\"my first post method\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate the JSON response have sys_id property\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var jsonpath = jsonData.result;\r",
+							"    pm.expect(jsonpath).to.have.property('sys_id');\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -52,12 +58,12 @@
 					"basic": [
 						{
 							"key": "password",
-							"value": "dLS9Qgs=V!0n",
+							"value": "{{password}}",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "admin",
+							"value": "{{username}}",
 							"type": "string"
 						}
 					]
@@ -74,12 +80,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/:tableName",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/api/now/table/:tableName",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
@@ -99,18 +103,33 @@
 		},
 		{
 			"name": "update-a-existing-record-in-incident-api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "basic",
 					"basic": [
 						{
 							"key": "password",
-							"value": "dLS9Qgs=V!0n",
+							"value": "{{password}}",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "admin",
+							"value": "{{username}}",
 							"type": "string"
 						}
 					]
@@ -127,28 +146,24 @@
 					}
 				},
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/:tableName/:sys_id",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:tableName/:sys_id",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
+						"{{basePath}}",
 						":tableName",
 						":sys_id"
 					],
 					"variable": [
 						{
 							"key": "tableName",
-							"value": "incident"
+							"value": "{{tableName}}"
 						},
 						{
 							"key": "sys_id",
-							"value": "cfd7f06c83843210bd50ed70deaad3f5"
+							"value": "{{sysId}}"
 						}
 					]
 				}
@@ -162,11 +177,13 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"\r",
-							""
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -176,12 +193,12 @@
 					"basic": [
 						{
 							"key": "password",
-							"value": "dLS9Qgs=V!0n",
+							"value": "{{password}}",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "admin",
+							"value": "{{username}}",
 							"type": "string"
 						}
 					]
@@ -198,33 +215,67 @@
 					}
 				},
 				"url": {
-					"raw": "https://dev214352.service-now.com/api/now/table/:tableName/:sys_id",
-					"protocol": "https",
+					"raw": "{{protocal}}://{{baseUrl}}/{{basePath}}/:tableName/:sys_id",
+					"protocol": "{{protocal}}",
 					"host": [
-						"dev214352",
-						"service-now",
-						"com"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"api",
-						"now",
-						"table",
+						"{{basePath}}",
 						":tableName",
 						":sys_id"
 					],
 					"variable": [
 						{
 							"key": "tableName",
-							"value": "incident"
+							"value": "{{tableName}}"
 						},
 						{
 							"key": "sys_id",
-							"value": "cfd7f06c83843210bd50ed70deaad3f5"
+							"value": "{{sysId}}"
 						}
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "tableName",
+			"value": "incident"
+		},
+		{
+			"key": "basePath",
+			"value": "api/now/table"
+		},
+		{
+			"key": "sysId",
+			"value": "1c741bd70b2322007518478d83673af3"
 		}
 	]
 }

@@ -49,7 +49,8 @@
 							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -59,12 +60,12 @@
 					"basic": [
 						{
 							"key": "password",
-							"value": "dLS9Qgs=V!0n",
+							"value": "{{password}}",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "admin",
+							"value": "{{username}}",
 							"type": "string"
 						}
 					]
@@ -126,7 +127,8 @@
 							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -393,6 +395,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -403,6 +406,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -412,11 +416,11 @@
 	"variable": [
 		{
 			"key": "basePath",
-			"value": ""
+			"value": "api/now/table"
 		},
 		{
 			"key": "tableName",
-			"value": ""
+			"value": "incident"
 		},
 		{
 			"key": "sysId",
