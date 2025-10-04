@@ -33,7 +33,8 @@ public class CreateNewIncidentRecordRequestBodyAsString {
 		   .statusLine(containsString("Created"))
 		   //.contentType(containsString("application/json")); 
 		   .contentType(ContentType.JSON)
-		   .time(lessThan(5000L));
+		   .time(lessThan(5000L))
+		   .body("result", hasKey("sys_id"));
 
 	}
 

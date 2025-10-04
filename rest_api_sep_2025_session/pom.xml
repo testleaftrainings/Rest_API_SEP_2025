@@ -8,8 +8,45 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>5.5.6</version>			
+			<version>5.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.13.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.11.0</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jsonschema2pojo</groupId>
+				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
+				<version>1.2.2</version>
+				<configuration>
+					<sourceType>json</sourceType>
+					<sourceDirectory>${basedir}/src/main/resources/request_payload</sourceDirectory>
+					<targetPackage>com.servicenow.pojos</targetPackage>
+					<outputDirectory>${basedir}/src/main/java</outputDirectory>
+					<annotationStyle>gson</annotationStyle>
+					<includeHashcodeAndEquals>false</includeHashcodeAndEquals>
+					<includeToString>false</includeToString>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
   
 </project>
