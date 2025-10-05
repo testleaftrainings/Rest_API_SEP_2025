@@ -35,6 +35,7 @@ public class CreateNewIncidentRecords {
 		  .baseUri("https://dev230683.service-now.com")
 		  .basePath("/api/now/table")
 		  .auth()
+		  .preemptive()
 		  .basic("admin", "Hz1e=0AU!fAd")
 		  .contentType(ContentType.JSON)
 		  .pathParam("tableName", "incident")		  

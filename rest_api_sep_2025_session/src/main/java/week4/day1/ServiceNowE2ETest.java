@@ -1,11 +1,13 @@
-package week3.day2;
+package week4.day1;
 
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.servicenow.pojos.CreateIncident;
 import com.servicenow.pojos.UpdateIncident;
 
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.*;
@@ -16,11 +18,20 @@ public class ServiceNowE2ETest {
 	CreateIncident createRequestPaylod;
 	UpdateIncident updateRequestPayload;
 	String sys_id;
+	RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
 	
 	@BeforeClass
 	public void beforeClass() {
 		createRequestPaylod = new CreateIncident();
 		updateRequestPayload = new UpdateIncident();
+	}
+	
+	@BeforeMethod
+	public void beforeMethod() {
+		requestSpecBuilder.setBaseUri("https://dev230683.service-now.com");
+		requestSpecBuilder.setBasePath("/api/now/table");
+		requestSpecBuilder.setAuth(basic("admin", "Hz1e=0AU!fAd"));
+		requestSpecBuilder.addPathParam("tableName", "incident");
 	}
 	
 	@Test(priority = 1)
@@ -33,13 +44,9 @@ public class ServiceNowE2ETest {
 		System.out.println(createRequestPaylod.getCategory());
 		
 		sys_id = given()
-				  .baseUri("https://dev230683.service-now.com")
-				  .basePath("/api/now/table")				  
-				  .auth()
-				  .basic("admin", "Hz1e=0AU!fAd")
+				  .spec(requestSpecBuilder.build())
 				  .contentType(ContentType.JSON)
-				  .accept(ContentType.JSON)
-				  .pathParam("tableName", "incident")	
+				  .accept(ContentType.JSON)				  
 				  .log().all()
 			   .when()
 			      .body(createRequestPaylod)
@@ -59,12 +66,8 @@ public class ServiceNowE2ETest {
 	@Test(priority = 2)
 	public void getRecord() {
 		given()
-		   .baseUri("https://dev230683.service-now.com")
-		   .basePath("/api/now/table")
-		   .auth()
-		   .basic("admin", "Hz1e=0AU!fAd")
-		   .accept(ContentType.JSON)
-		   .pathParam("tableName", "incident")
+		   .spec(requestSpecBuilder.build())
+		   .accept(ContentType.JSON)		  
 		   .pathParam("sysId", sys_id)
 		.when()
 		   .get("/{tableName}/{sysId}")
@@ -89,13 +92,9 @@ public class ServiceNowE2ETest {
 		updateRequestPayload.setCategory("software");
 		
 		given()
-		   .baseUri("https://dev230683.service-now.com")
-		   .basePath("/api/now/table")
-		   .auth()
-	       .basic("admin", "Hz1e=0AU!fAd")
+		   .spec(requestSpecBuilder.build())
 		   .contentType(ContentType.JSON)
-		   .accept(ContentType.JSON)
-		   .pathParam("tableName", "incident")	
+		   .accept(ContentType.JSON)		   	
 		   .pathParam("sysId", sys_id)
 		   .log().all()
 		.when()
@@ -119,11 +118,7 @@ public class ServiceNowE2ETest {
 	@Test(priority = 4)
 	public void deleteRecord() {
 		given()
-		   .baseUri("https://dev230683.service-now.com")
-		   .basePath("/api/now/table")
-		   .auth()
-		   .basic("admin", "Hz1e=0AU!fAd")		   
-		   .pathParam("tableName", "incident")
+		   .spec(requestSpecBuilder.build())
 		   .pathParam("sysId", sys_id)
 		.when()
 		   .delete("/{tableName}/{sysId}")
@@ -137,12 +132,8 @@ public class ServiceNowE2ETest {
 	@Test(priority = 5)
 	public void validateIsRecordDeleted() {
 		given()
-		   .baseUri("https://dev230683.service-now.com")
-		   .basePath("/api/now/table")
-		   .auth()
-		   .basic("admin", "Hz1e=0AU!fAd")
-		   .accept(ContentType.JSON)
-		   .pathParam("tableName", "incident")
+		   .spec(requestSpecBuilder.build())
+		   .accept(ContentType.JSON)		   
 		   .pathParam("sysId", sys_id)
 		.when()
 		   .get("/{tableName}/{sysId}")

@@ -1,14 +1,12 @@
-package week3.day2;
+package week4.day1;
 
 import static io.restassured.RestAssured.*;
 
 import static org.hamcrest.Matchers.*;
 
 import com.servicenow.pojos.CreateIncident;
-import com.servicenow.response.pojos.CreateIncidentResponse;
 
 import io.restassured.http.ContentType;
-import io.restassured.mapper.ObjectMapperType;
 
 public class CreateNewIncidentRecordRequestBodyAsPojoObject {
 
@@ -19,7 +17,7 @@ public class CreateNewIncidentRecordRequestBodyAsPojoObject {
 		requestBody.setShortDescription("RESTAPISEP20251");
 		requestBody.setDescription("POJO class Record");		
 		
-		String sysId = given()
+		given()
 		  .baseUri("https://dev230683.service-now.com")
 		  .basePath("/api/now/table")
 		  .auth()
@@ -35,14 +33,8 @@ public class CreateNewIncidentRecordRequestBodyAsPojoObject {
 	      .statusCode(201)
 	      .statusLine(containsString("Created")) // HTTP1.1 201 Created == Created
 	      .contentType(ContentType.JSON)
-	      .time(lessThan(5000L))
-	      .extract()
-	      .response()
-	      .as(CreateIncidentResponse.class, ObjectMapperType.GSON)
-	      .getResult()
-	      .getSysId();
+	      .time(lessThan(5000L));
 	      
-		System.out.println(sysId);
 
 	}
 
