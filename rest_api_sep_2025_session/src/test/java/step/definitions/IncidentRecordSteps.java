@@ -44,7 +44,7 @@ public class IncidentRecordSteps {
 	
 	@Then("user should able to see the success response and with relevant status code and message")
 	public void user_should_able_to_see_the_success_response_and_with_relevant_status_code_and_message() {
-	    response.then()
+	   	response.then()
 	            .log().all()
 	            .assertThat()
 	            .statusCode(200)
