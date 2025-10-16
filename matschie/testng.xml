@@ -2,8 +2,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
   <test thread-count="5" name="Test">
-    <classes>
+    <classes>      
       <class name="com.matschie.servicenow.tests.IncidentTest"/>
+      <class name="com.matschie.servicenow.tests.IncidentTestV1"/>
+      <class name="com.matschie.servicenow.tests.IncidentTestV2"/>
+      <class name="com.matschie.servicenow.tests.IncidentTestV3"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -40,8 +40,8 @@ public class IncidentService extends RestAssuredApiClientImpl {
 		assertThat(response.getContentType(), equalTo(contentType));
 	}
 	
-	public String extractSysId() {
-		TableApi tableApi = gson.fromJson(response.getBody(), TableApi.class);
+	public String extractSysId() {		
+		TableApi tableApi = gson.fromJson(response.getBody(), TableApi.class);		
 		assertThat(tableApi.getResult().getSysId(), not(emptyOrNullString()));
 		return tableApi.getResult().getSysId();
 	}

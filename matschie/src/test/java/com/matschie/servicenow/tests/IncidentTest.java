@@ -11,6 +11,8 @@ import com.matschie.servicenow.deserialization.pojos.TableApi;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 
+import static com.matschie.general.utils.PropertiesHandlers.config;
+import static com.matschie.general.utils.PropertiesHandlers.secret;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
@@ -24,9 +26,9 @@ public class IncidentTest {
 	
 	@BeforeClass
 	public void beforeClass() {
-		requestBuilder.setBaseUri("https://dev230683.service-now.com");
-		requestBuilder.setBasePath("/api/now/table");
-		requestBuilder.setAuth(RestAssured.basic("admin", "Hz1e=0AU!fAd"));
+		requestBuilder.setBaseUri(config("service.now.base.uri"));
+		requestBuilder.setBasePath(config("service.now.base.path"));
+		requestBuilder.setAuth(RestAssured.basic(config("sevice.now.instance.username"), secret("service.now.instance.password")));
 		requestBuilder.addPathParam("tableName", "incident");
 	}
 	

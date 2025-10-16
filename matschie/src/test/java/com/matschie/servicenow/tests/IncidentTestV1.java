@@ -1,5 +1,8 @@
 package com.matschie.servicenow.tests;
 
+import static com.matschie.general.utils.PropertiesHandlers.config;
+import static com.matschie.general.utils.PropertiesHandlers.secret;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -16,9 +19,9 @@ public class IncidentTestV1 {
 	
 	@BeforeClass
 	public void beforeClass() {
-		requestBuilder.setBaseUri("https://dev230683.service-now.com");
-		requestBuilder.setBasePath("/api/now/table");
-		requestBuilder.setAuth(RestAssured.basic("admin", "Hz1e=0AU!fAd"));		
+		requestBuilder.setBaseUri(config("service.now.base.uri"));
+		requestBuilder.setBasePath(config("service.now.base.path"));
+		requestBuilder.setAuth(RestAssured.basic(config("sevice.now.instance.username"), secret("service.now.instance.password")));		
 	}
 	
 	@Test(priority = 1)
