@@ -34,6 +34,10 @@ public class IncidentService extends ServiceNow {
 		response = apiClient.post(requestBuilder, TABLE_NAME);
 	}
 	
+	public void createNewRecord(RequestSpecBuilder requestBuilder, Object body) {
+		response = apiClient.post(requestBuilder, TABLE_NAME, body);
+	}
+	
 	public void getAllRecords(RequestSpecBuilder requestBuilder) {
 		response = apiClient.get(requestBuilder, TABLE_NAME);
 	}

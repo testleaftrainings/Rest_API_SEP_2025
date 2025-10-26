@@ -1,0 +1,361 @@
+{
+	"info": {
+		"_postman_id": "d6d84dc8-f24e-4f85-a5a2-c736d50c8eb5",
+		"name": "UIBank_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2257080",
+		"_collection_link": "https://warped-zodiac-84258.postman.co/workspace/RESTAPIJul2025~7c43559e-eccb-4e0b-8f3f-23c7622808ff/collection/2257080-d6d84dc8-f24e-4f85-a5a2-c736d50c8eb5?action=share&source=collection_link&creator=2257080"
+	},
+	"item": [
+		{
+			"name": "Create_User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"karthike.selene1@gmail.com\",\r\n    \"password\": \"Test@123\",\r\n    \"gender\": \"male\",\r\n    \"title\": \"mrs\",\r\n    \"employmentStatus\": \"Full-time\",\r\n    \"maritalStatus\": \"Married\",\r\n    \"username\": \"adminuser\",\r\n    \"type\": \"customer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/users/",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response format should be application/json\", function () {\r",
+							"    let responseFormat = pm.response.headers.get(\"Content-Type\");\r",
+							"    pm.expect(responseFormat).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"var jsonResponse = pm.response.json();\r",
+							"pm.collectionVariables.set(\"token\", jsonResponse.id);\r",
+							"pm.collectionVariables.set(\"userId\", jsonResponse.userId);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"FebApiuser\",\r\n    \"password\": \"Eagle@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/users/login",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response format should be application/json\", function () {\r",
+							"    let responseFormat = pm.response.headers.get(\"Content-Type\");\r",
+							"    pm.expect(responseFormat).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"nickname\", jsonData.friendlyName);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"friendlyName\": \"{{$randomFirstName}}\",\r\n    \"type\": \"checking\",\r\n    \"userId\": \"{{userId}}\",\r\n    \"balance\": 100,\r\n    \"accountNumber\": {{$randomBankAccount}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/accounts",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter_Account_By_FriendlyName",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/accounts?filter[where][friendlyName]={{nickname}}",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "filter[where][friendlyName]",
+							"value": "{{nickname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter_Account_By_AccountId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/accounts?filter[where][id]=64290839ba9f8a0047adacfd",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "filter[where][id]",
+							"value": "64290839ba9f8a0047adacfd"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_All_Accounts_Of_One_User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/accounts?filter[where][userId]=64290839ba9f8a0047adacfd",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "filter[where][userId]",
+							"value": "64290839ba9f8a0047adacfd"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trasfer_Amount_To_AccountId",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "95KSI0YkohiqzxEOI9HXnceg07dMiLxeV2X9oVG1UE7OxO4DteFhHEtDyo8aykjb"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "origin",
+						"value": "https://uibank.uipath.com"
+					},
+					{
+						"key": "referer",
+						"value": "https://uibank.uipath.com/"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"transfer\",\r\n    \"amount\": 30,\r\n    \"TransfertoAccountId\": \"68f130b2384c26004aace8c7\",\r\n    \"accountId\": \"68f12e44384c26004aace8c4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uibank-api.azurewebsites.net/api/transactions",
+					"protocol": "https",
+					"host": [
+						"uibank-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"transactions"
+					]
+				},
+				"description": "Generated from cURL: curl \"https://uibank-api.azurewebsites.net/api/transactions\"\r\n  -H \"accept: application/json\"  \r\n  -H \"authorization: 95KSI0YkohiqzxEOI9HXnceg07dMiLxeV2X9oVG1UE7OxO4DteFhHEtDyo8aykjb\"\r\n  -H \"content-type: application/json\" \r\n  -H \"origin: https://uibank.uipath.com\"  \r\n  -H \"referer: https://uibank.uipath.com/\"  \r\n  --data-raw \"{\\\"type\\\":\\\"transfer\\\",\\\"dispute\\\":\\\"ok\\\",\\\"ref\\\":\\\"\\\",\\\"description\\\":\\\"transfer was made for demo purposes\\\",\\\"amount\\\":483,\\\"TransfertoAccountId\\\":\\\"68aa4a0268dcf52983b8ea68\\\",\\\"balance\\\":100,\\\"accountId\\\":\\\"64290839ba9f8a0047adacfd\\\"}\""
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "nickname",
+			"value": ""
+		}
+	]
+}

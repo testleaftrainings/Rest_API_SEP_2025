@@ -4,8 +4,8 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-		          features = {"src/test/java/com/matschie/servicenow/features/IncidentRecord.feature:10"},
-		          glue = {"com.matschie.servicenow.step.defs"},
+		          features = {"src/test/java/com/matschie/servicenow/projectday/features/Incident.feature"},
+		          glue = {"com.matschie.servicenow.projectday.step.defs"},
 		          dryRun = false,
 		          plugin = {
 		        		  "pretty",
